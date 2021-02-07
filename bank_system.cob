@@ -1,4 +1,4 @@
-        IDENTIFICATION DIVISION.
+	IDENTIFICATION DIVISION.
         PROGRAM-ID. PRACTICE.
         AUTHOR. Jon Strassel.
         DATE-WRITTEN.April 23rd 2020
@@ -32,19 +32,35 @@
            02 WSAge PIC Z(3).
  
         PROCEDURE DIVISION.
-        PERFORM ParseCmd WITH TEST AFTER UNTIL UserInput = "End"
+        Display ""
+        Display ""
+        Display " ______ _          _     ____              _"    
+        Display " |  ____(_)        | |   |  _ \            | |   "
+        Display " | |__   _ _ __ ___| |_  | |_) | __ _ _ __ | | __"
+        Display " |  __| | | '__/ __| __| |  _ < / _` | '_ \| |/ /"
+        Display " | |    | | |  \__ \ |_  | |_) | (_| | | | |   < "
+        Display " |_|    |_|_|  |___/\__| |____/ \__,_|_| |_|_|\_\"
+        Display ""
+        Display ""
+        Display ""
+        PERFORM ParseCmd WITH TEST AFTER UNTIL UserInput = "quit"
+            DISPLAY ""
+            DISPLAY "Quiting Program".
             STOP RUN.
-
         ParseCmd.
            DISPLAY "Enter a Input: " WITH NO ADVANCING.
            ACCEPT UserInput.
-           IF UserInput <> "End" THEN
+           IF UserInput <> "quit" THEN
                UNSTRING UserInput DELIMITED BY SPACE
                    INTO Command, Parameters, Arguments
                END-UNSTRING
                DISPLAY " "
                EVALUATE TRUE
                    WHEN Command = "cf"
+                       IF Arguments = SPACE THEN
+                           DISPLAY "Filename? " WITH NO ADVANCING
+                           ACCEPT Arguments
+                       END-IF
                        DISPLAY "Create File " Arguments
                        OPEN OUTPUT InputFile
                            DISPLAY "First Name: " WITH NO ADVANCING
@@ -56,7 +72,7 @@
                            MOVE WSPerson TO Person
                            WRITE Person
                            END-WRITE 
-                        CLOSE InputFile
+                       CLOSE InputFile
 
                    WHEN Command = "pf"
                        DISPLAY "Print File"
